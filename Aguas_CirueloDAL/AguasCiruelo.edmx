@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AguasCirueloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes_tb">
+          <Key>
+            <PropertyRef Name="Id_Cliente" />
+          </Key>
+          <Property Name="Id_Cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave_Cliente" Type="nchar" MaxLength="10" />
+          <Property Name="DNI_Cliente" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nombre_Cliente" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido_Cliente" Type="nchar" MaxLength="10" />
+          <Property Name="Direccion_Cliente" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pilas_Cliente" Type="nvarchar" MaxLength="5" />
+          <Property Name="Tanques_Cliente" Type="nvarchar" MaxLength="5" />
+          <Property Name="Cisterna_Cliente" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Pagos_tb">
+          <Key>
+            <PropertyRef Name="Id_Pago" />
+          </Key>
+          <Property Name="Id_Pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha_Pago" Type="datetime" />
+          <Property Name="FechaProx_Pago" Type="datetime" />
+          <Property Name="DiasFacturados_Pago" Type="nvarchar" MaxLength="5" />
+          <Property Name="Mora_Pago" Type="nvarchar" MaxLength="50" />
+          <Property Name="Total_Pago" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id_Cliente" Type="int" />
+          <Property Name="Id_Usuario" Type="int" />
+          <Property Name="Id_precio" Type="int" />
+        </EntityType>
+        <EntityType Name="Precios_tb">
+          <Key>
+            <PropertyRef Name="Id_precio" />
+          </Key>
+          <Property Name="Id_precio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pilas_Precio" Type="nvarchar" MaxLength="5" />
+          <Property Name="Tanques_Precio" Type="nvarchar" MaxLength="5" />
+          <Property Name="Cisternas_Precio" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Usuarios_tb">
+          <Key>
+            <PropertyRef Name="Id_Usuarios" />
+          </Key>
+          <Property Name="Id_Usuarios" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DNI_Usuarios" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nombre_Usuarios" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido_Usuarios" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contraseña_Usuarios" Type="nvarchar(max)" />
+          <Property Name="Cargo_Usuarios" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id_Pago" Type="int" />
+        </EntityType>
+        <Association Name="FK_Pagos_tb_Clientes_tb">
+          <End Role="Clientes_tb" Type="Self.Clientes_tb" Multiplicity="0..1" />
+          <End Role="Pagos_tb" Type="Self.Pagos_tb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes_tb">
+              <PropertyRef Name="Id_Cliente" />
+            </Principal>
+            <Dependent Role="Pagos_tb">
+              <PropertyRef Name="Id_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_tb_Precios_tb">
+          <End Role="Precios_tb" Type="Self.Precios_tb" Multiplicity="0..1" />
+          <End Role="Pagos_tb" Type="Self.Pagos_tb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Precios_tb">
+              <PropertyRef Name="Id_precio" />
+            </Principal>
+            <Dependent Role="Pagos_tb">
+              <PropertyRef Name="Id_precio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_tb_Pagos_tb">
+          <End Role="Pagos_tb" Type="Self.Pagos_tb" Multiplicity="0..1" />
+          <End Role="Usuarios_tb" Type="Self.Usuarios_tb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pagos_tb">
+              <PropertyRef Name="Id_Pago" />
+            </Principal>
+            <Dependent Role="Usuarios_tb">
+              <PropertyRef Name="Id_Pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AguasCirueloModelStoreContainer">
+          <EntitySet Name="Clientes_tb" EntityType="Self.Clientes_tb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pagos_tb" EntityType="Self.Pagos_tb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Precios_tb" EntityType="Self.Precios_tb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios_tb" EntityType="Self.Usuarios_tb" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Pagos_tb_Clientes_tb" Association="Self.FK_Pagos_tb_Clientes_tb">
+            <End Role="Clientes_tb" EntitySet="Clientes_tb" />
+            <End Role="Pagos_tb" EntitySet="Pagos_tb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_tb_Precios_tb" Association="Self.FK_Pagos_tb_Precios_tb">
+            <End Role="Precios_tb" EntitySet="Precios_tb" />
+            <End Role="Pagos_tb" EntitySet="Pagos_tb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_tb_Pagos_tb" Association="Self.FK_Usuarios_tb_Pagos_tb">
+            <End Role="Pagos_tb" EntitySet="Pagos_tb" />
+            <End Role="Usuarios_tb" EntitySet="Usuarios_tb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AguasCirueloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clientes_tb">
+          <Key>
+            <PropertyRef Name="Id_Cliente" />
+          </Key>
+          <Property Name="Id_Cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Clave_Cliente" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DNI_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido_Cliente" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Direccion_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pilas_Cliente" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Tanques_Cliente" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Cisterna_Cliente" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pagos_tb" Relationship="Self.FK_Pagos_tb_Clientes_tb" FromRole="Clientes_tb" ToRole="Pagos_tb" />
+        </EntityType>
+        <EntityType Name="Pagos_tb">
+          <Key>
+            <PropertyRef Name="Id_Pago" />
+          </Key>
+          <Property Name="Id_Pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha_Pago" Type="DateTime" Precision="3" />
+          <Property Name="FechaProx_Pago" Type="DateTime" Precision="3" />
+          <Property Name="DiasFacturados_Pago" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Mora_Pago" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Total_Pago" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Cliente" Type="Int32" />
+          <Property Name="Id_Usuario" Type="Int32" />
+          <Property Name="Id_precio" Type="Int32" />
+          <NavigationProperty Name="Clientes_tb" Relationship="Self.FK_Pagos_tb_Clientes_tb" FromRole="Pagos_tb" ToRole="Clientes_tb" />
+          <NavigationProperty Name="Precios_tb" Relationship="Self.FK_Pagos_tb_Precios_tb" FromRole="Pagos_tb" ToRole="Precios_tb" />
+          <NavigationProperty Name="Usuarios_tb" Relationship="Self.FK_Usuarios_tb_Pagos_tb" FromRole="Pagos_tb" ToRole="Usuarios_tb" />
+        </EntityType>
+        <EntityType Name="Precios_tb">
+          <Key>
+            <PropertyRef Name="Id_precio" />
+          </Key>
+          <Property Name="Id_precio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pilas_Precio" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Tanques_Precio" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Cisternas_Precio" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pagos_tb" Relationship="Self.FK_Pagos_tb_Precios_tb" FromRole="Precios_tb" ToRole="Pagos_tb" />
+        </EntityType>
+        <EntityType Name="Usuarios_tb">
+          <Key>
+            <PropertyRef Name="Id_Usuarios" />
+          </Key>
+          <Property Name="Id_Usuarios" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DNI_Usuarios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre_Usuarios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido_Usuarios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contraseña_Usuarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cargo_Usuarios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Pago" Type="Int32" />
+          <NavigationProperty Name="Pagos_tb" Relationship="Self.FK_Usuarios_tb_Pagos_tb" FromRole="Usuarios_tb" ToRole="Pagos_tb" />
+        </EntityType>
+        <Association Name="FK_Pagos_tb_Clientes_tb">
+          <End Role="Clientes_tb" Type="Self.Clientes_tb" Multiplicity="0..1" />
+          <End Role="Pagos_tb" Type="Self.Pagos_tb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes_tb">
+              <PropertyRef Name="Id_Cliente" />
+            </Principal>
+            <Dependent Role="Pagos_tb">
+              <PropertyRef Name="Id_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_tb_Precios_tb">
+          <End Role="Precios_tb" Type="Self.Precios_tb" Multiplicity="0..1" />
+          <End Role="Pagos_tb" Type="Self.Pagos_tb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Precios_tb">
+              <PropertyRef Name="Id_precio" />
+            </Principal>
+            <Dependent Role="Pagos_tb">
+              <PropertyRef Name="Id_precio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_tb_Pagos_tb">
+          <End Role="Pagos_tb" Type="Self.Pagos_tb" Multiplicity="0..1" />
+          <End Role="Usuarios_tb" Type="Self.Usuarios_tb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pagos_tb">
+              <PropertyRef Name="Id_Pago" />
+            </Principal>
+            <Dependent Role="Usuarios_tb">
+              <PropertyRef Name="Id_Pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cirueloEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes_tb" EntityType="Self.Clientes_tb" />
+          <EntitySet Name="Pagos_tb" EntityType="Self.Pagos_tb" />
+          <EntitySet Name="Precios_tb" EntityType="Self.Precios_tb" />
+          <EntitySet Name="Usuarios_tb" EntityType="Self.Usuarios_tb" />
+          <AssociationSet Name="FK_Pagos_tb_Clientes_tb" Association="Self.FK_Pagos_tb_Clientes_tb">
+            <End Role="Clientes_tb" EntitySet="Clientes_tb" />
+            <End Role="Pagos_tb" EntitySet="Pagos_tb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_tb_Precios_tb" Association="Self.FK_Pagos_tb_Precios_tb">
+            <End Role="Precios_tb" EntitySet="Precios_tb" />
+            <End Role="Pagos_tb" EntitySet="Pagos_tb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_tb_Pagos_tb" Association="Self.FK_Usuarios_tb_Pagos_tb">
+            <End Role="Pagos_tb" EntitySet="Pagos_tb" />
+            <End Role="Usuarios_tb" EntitySet="Usuarios_tb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AguasCirueloModelStoreContainer" CdmEntityContainer="cirueloEntities">
+          <EntitySetMapping Name="Clientes_tb">
+            <EntityTypeMapping TypeName="AguasCirueloModel.Clientes_tb">
+              <MappingFragment StoreEntitySet="Clientes_tb">
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="Clave_Cliente" ColumnName="Clave_Cliente" />
+                <ScalarProperty Name="DNI_Cliente" ColumnName="DNI_Cliente" />
+                <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
+                <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
+                <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
+                <ScalarProperty Name="Pilas_Cliente" ColumnName="Pilas_Cliente" />
+                <ScalarProperty Name="Tanques_Cliente" ColumnName="Tanques_Cliente" />
+                <ScalarProperty Name="Cisterna_Cliente" ColumnName="Cisterna_Cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pagos_tb">
+            <EntityTypeMapping TypeName="AguasCirueloModel.Pagos_tb">
+              <MappingFragment StoreEntitySet="Pagos_tb">
+                <ScalarProperty Name="Id_Pago" ColumnName="Id_Pago" />
+                <ScalarProperty Name="Fecha_Pago" ColumnName="Fecha_Pago" />
+                <ScalarProperty Name="FechaProx_Pago" ColumnName="FechaProx_Pago" />
+                <ScalarProperty Name="DiasFacturados_Pago" ColumnName="DiasFacturados_Pago" />
+                <ScalarProperty Name="Mora_Pago" ColumnName="Mora_Pago" />
+                <ScalarProperty Name="Total_Pago" ColumnName="Total_Pago" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
+                <ScalarProperty Name="Id_precio" ColumnName="Id_precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Precios_tb">
+            <EntityTypeMapping TypeName="AguasCirueloModel.Precios_tb">
+              <MappingFragment StoreEntitySet="Precios_tb">
+                <ScalarProperty Name="Id_precio" ColumnName="Id_precio" />
+                <ScalarProperty Name="Pilas_Precio" ColumnName="Pilas_Precio" />
+                <ScalarProperty Name="Tanques_Precio" ColumnName="Tanques_Precio" />
+                <ScalarProperty Name="Cisternas_Precio" ColumnName="Cisternas_Precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios_tb">
+            <EntityTypeMapping TypeName="AguasCirueloModel.Usuarios_tb">
+              <MappingFragment StoreEntitySet="Usuarios_tb">
+                <ScalarProperty Name="Id_Usuarios" ColumnName="Id_Usuarios" />
+                <ScalarProperty Name="DNI_Usuarios" ColumnName="DNI_Usuarios" />
+                <ScalarProperty Name="Nombre_Usuarios" ColumnName="Nombre_Usuarios" />
+                <ScalarProperty Name="Apellido_Usuarios" ColumnName="Apellido_Usuarios" />
+                <ScalarProperty Name="Contraseña_Usuarios" ColumnName="Contraseña_Usuarios" />
+                <ScalarProperty Name="Cargo_Usuarios" ColumnName="Cargo_Usuarios" />
+                <ScalarProperty Name="Id_Pago" ColumnName="Id_Pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

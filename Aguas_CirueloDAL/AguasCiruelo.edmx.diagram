@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2960f7a2bbeb42d8aac9c2560feed944" Name="Diagram1">
+        <EntityTypeShape EntityType="AguasCirueloModel.Clientes_tb" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AguasCirueloModel.Pagos_tb" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AguasCirueloModel.Precios_tb" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AguasCirueloModel.Usuarios_tb" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="AguasCirueloModel.FK_Pagos_tb_Clientes_tb" ManuallyRouted="false" />
+        <AssociationConnector Association="AguasCirueloModel.FK_Pagos_tb_Precios_tb" ManuallyRouted="false" />
+        <AssociationConnector Association="AguasCirueloModel.FK_Usuarios_tb_Pagos_tb" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
